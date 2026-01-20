@@ -109,9 +109,53 @@ public class AuthorJdbcRepository {
         }
 
         return Optional.ofNullable(author);
+    }//여기도 원래 sql문
+
+
+
+    public void delete(Long id){
+        try {
+            Connection connection =dataSource.getConnection();
+            String sql ="delete from authortest where id =?";
+            PreparedStatement ps =connection.prepareStatement(sql);
+            ps.setLong(1,id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-}//여기도 원래 sql문
+    public Optional<Author> findByEmail(String inputEmail){
+        Author author = null;
+
+        Connection connection =null;
+        try {
+            connection = dataSource.getConnection();
+            String sql = "select * from authortest where email = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, inputEmail);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Long id = rs.getLong("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                author = Author.builder()
+                        .id(id)
+                        .name(name)
+                        .email(email)
+                        .password(password)
+                        .build();
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return Optional.ofNullable(author);
+
+    }
+}
+
+
 
 
 

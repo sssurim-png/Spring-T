@@ -24,6 +24,9 @@ public class AuthorService {
     }
 //3.
     public void save(AuthorCreateDto dto){
+        if(authorJdbcRepository.findByEmail(dto.getEmail()).isPresent()){
+            throw new IllegalArgumentException("이미 존재하는 email입니다");
+        }
         Author author = dto.toEntity();
         authorJdbcRepository.save(author);
     }
@@ -49,6 +52,11 @@ public class AuthorService {
         Author author = optAuthor.orElseThrow(()->new NoSuchElementException("entity is not found")); //repository는 값만 넘겨주고 판단은 service에서 한다
         AuthorDetailDtoResponse dto = AuthorDetailDtoResponse.fromEntity(author);
         return dto;
+    }
+
+    public void delete(Long id){
+        Author author =authorJdbcRepository.findById(id).orElseThrow(()->new NoSuchElementException("entity is not found"));
+        authorJdbcRepository.delete(id);
     }
 
 }
