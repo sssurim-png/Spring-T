@@ -95,7 +95,7 @@ public class AuthorJdbcRepository {
                 String name = rs.getString("name");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                author =Author.builder()
+                author = Author.builder()
                         .id(id)
                         .name(name)
                         .email(email)

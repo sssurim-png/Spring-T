@@ -4,6 +4,7 @@ package com.example.qqq.board.author.controller;
 import com.example.qqq.board.author.dtos.AuthorCreateDto;
 import com.example.qqq.board.author.dtos.AuthorDetailDtoResponse;
 import com.example.qqq.board.author.dtos.AuthorListDtoResponse;
+import com.example.qqq.board.author.dtos.AuthorUpdatePwDto;
 import com.example.qqq.board.author.service.AuthorService;
 import com.example.qqq.board.commom.CommonErrorDto;
 import jakarta.validation.Valid;
@@ -70,6 +71,12 @@ public class AuthorController {
     public String delete(@PathVariable Long id) {
         authorService.delete(id);
         return null;
+    }
+
+//    실습 비밀번호 수정
+    @PatchMapping("/update/password")
+    public void updatePw(@RequestBody AuthorUpdatePwDto dto){
+        authorService.updatePw(dto);
     }
 
 
