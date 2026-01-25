@@ -23,7 +23,7 @@ public class PostDetailDto {
                 .title(post.getTitle())
                 .category(post.getCategory())
                 .contents(post.getContents())
-                .authorEmail(post.getAuthorEmail())
+                .authorEmail(post.getAuthor().getEmail())
                 .build();
     }
 }
