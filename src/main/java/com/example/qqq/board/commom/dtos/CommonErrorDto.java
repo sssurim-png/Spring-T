@@ -1,4 +1,4 @@
-package com.example.qqq.board.commom;
+package com.example.qqq.board.commom.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

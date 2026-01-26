@@ -1,12 +1,11 @@
 package com.example.qqq.board.author.domain;
 
 
-import com.example.qqq.board.commom.BaseTimeEntity;
+import com.example.qqq.board.commom.domain.BaseTimeEntity;
 import com.example.qqq.board.post.domain.Address;
 import com.example.qqq.board.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.boot.archive.spi.AbstractArchiveDescriptor;
 
 import java.util.ArrayList;
 import java.util.List;

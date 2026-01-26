@@ -1,12 +1,10 @@
 package com.example.qqq.board.author.controller;
 
 
-import com.example.qqq.board.author.dtos.AuthorCreateDto;
-import com.example.qqq.board.author.dtos.AuthorDetailDtoResponse;
-import com.example.qqq.board.author.dtos.AuthorListDtoResponse;
-import com.example.qqq.board.author.dtos.AuthorUpdatePwDto;
+import com.example.qqq.board.author.domain.Author;
+import com.example.qqq.board.author.dtos.*;
 import com.example.qqq.board.author.service.AuthorService;
-import com.example.qqq.board.commom.CommonErrorDto;
+import com.example.qqq.board.commom.auth.JwtTokenProvider;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,13 +18,15 @@ import java.util.List;
 public class AuthorController {
     //    1. 의존성 필드 선언
     private AuthorService authorService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     //    2. 생성자를 통한 의존성 주입(수동 생성자 주입)을 이용해 의존 객체(service)를 초기화 //의존 주체(controller) -controller는 service없이 기능을 수행할 수 없다
 //     - 컨트롤러가 의존하는 서비스 객체를 생성자를 통해 주입(수동 생성자 주입)한 것
 //    2-2. 생성자 주입 -의존성 Spring규칙에 따라 자동으로 주입
     @Autowired
-    public AuthorController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService, JwtTokenProvider jwtTokenProvider) {
         this.authorService = authorService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     //    3. Author(Dto)를 DB로 전달 (entity변환) //사용자->db로 저장
@@ -35,19 +35,6 @@ public class AuthorController {
     @PostMapping("/create")
     @ResponseBody
     public ResponseEntity<?> create(@RequestBody @Valid AuthorCreateDto dto) {
-//        이메일 중복검증
-//        try {
-//            authorService.save(dto);
-//            return ResponseEntity.status(HttpStatus.CREATED).body("ok");
-//        } catch (IllegalArgumentException e) {
-//            e.printStackTrace();
-//            CommonErrorDto errorDto = CommonErrorDto.builder()
-//                    .status_code(400)
-//                    .error_message(e.getMessage())
-//                    .build();
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorDto);
-//
-//        }
         authorService.save(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body("ok");
     }
@@ -78,6 +65,20 @@ public class AuthorController {
     public void updatePw(@RequestBody AuthorUpdatePwDto dto){
         authorService.updatePw(dto);
     }
+
+//    로그인
+    @PostMapping("/login")
+    public String login(@RequestBody AuthorLoginDto dto){
+        Author author =authorService.login(dto); // dto=증거, enity=판정,원본을 조건에 따라 비교 반환한다
+
+
+        //토큰 리턴
+        String token = jwtTokenProvider.createToken(author);
+        return token;
+
+
+    }
+
 
 
 }

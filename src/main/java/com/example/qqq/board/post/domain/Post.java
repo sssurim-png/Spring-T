@@ -1,7 +1,7 @@
 package com.example.qqq.board.post.domain;
 
 import com.example.qqq.board.author.domain.Author;
-import com.example.qqq.board.commom.BaseTimeEntity;
+import com.example.qqq.board.commom.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

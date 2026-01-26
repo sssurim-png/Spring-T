@@ -42,7 +42,7 @@ public class PostService {
         Optional<Post>optPost= postRepository.findById(id);
         Post post = optPost.orElseThrow(()->new EntityNotFoundException("없는 사용자"));
         PostDetailDto dto= PostDetailDto.fromEntity(post);
-        return dto; //id->email로 조회하는 건 안했다
+        return dto; //id->email로 조회
 
     }
 

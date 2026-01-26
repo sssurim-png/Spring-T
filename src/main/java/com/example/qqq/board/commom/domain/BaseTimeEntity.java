@@ -1,4 +1,4 @@
-package com.example.qqq.board.commom;
+package com.example.qqq.board.commom.domain;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
